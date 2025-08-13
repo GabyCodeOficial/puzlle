@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presente Fofo 💝</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(to bottom right, #ffe4e1, #fff0f5);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            background-color: #ffffffcc;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #ff69b4;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #ff69b4;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #ffb6c1;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #ff69b4;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .page {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1em;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        input[type="text"], input[type="color"], input[type="file"], select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .gif-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .gif-option {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .gif-option:hover {
+            border-color: #ffb6c1;
+        }
+
+        .gif-option.selected {
+            border-color: #ff69b4;
+        }
+
+        .link-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .link-box input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .link-box button {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .puzzle-container {
+            margin-top: 20px;
+        }
+
+        .puzzle-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .apresentacao-container {
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mensagem-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .mensagem-texto {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .gif-surpresa {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ff69b4;
+            font-weight: bold;
+        }
+
+        /* Estilos do quebra-cabeça */
+        .puzzle-board {
+            margin: 20px auto;
+            border: 3px solid #ff69b4;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            gap: 1px;
+            position: relative;
+        }
+
+        .puzzle-piece-slot {
+            position: relative;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px dashed #ccc;
+        }
+
+        .puzzle-piece-slot.filled {
+            border: none;
+            background-color: transparent;
+        }
+
+        .puzzle-piece {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .puzzle-piece.placed {
+            position: relative;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .puzzle-pieces-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            min-height: 120px;
+        }
+
+        .puzzle-piece-draggable {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .puzzle-piece-draggable:hover {
+            border-color: #ff69b4;
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .puzzle-piece-draggable.dragging {
+            opacity: 0.7;
+            transform: rotate(3deg) scale(1.1);
+            z-index: 20;
+        }
+
+        .puzzle-stats {
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background-color: #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff69b4, #ffb6c1);
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .puzzle-complete-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            z-index: 100;
+        }
+
+        .puzzle-complete-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Estilos para peças de quebra-cabeça realistas */
+        .puzzle-piece-shape {
+            position: relative;
+            overflow: visible;
+        }
+
+        .puzzle-piece-shape::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: inherit;
+            z-index: -1;
+        }
+
+        /* Formas específicas para diferentes tipos de peças */
+        .piece-corner-tl {
+            clip-path: polygon(0% 0%, 70% 0%, 85% 15%, 85% 35%, 70% 50%, 85% 65%, 85% 85%, 70% 100%, 0% 100%, 0% 0%);
+        }
+
+        .piece-corner-tr {
+            clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%, 15% 85%, 15% 65%, 30% 50%, 15% 35%, 15% 15%, 30% 0%);
+        }
+
+        .piece-corner-bl {
+            clip-path: polygon(0% 0%, 70% 0%, 85% 15%, 85% 35%, 70% 50%, 85% 65%, 85% 85%, 70% 100%, 0% 100%, 0% 0%);
+        }
+
+        .piece-corner-br {
+            clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%, 15% 85%, 15% 65%, 30% 50%, 15% 35%, 15% 15%, 30% 0%);
+        }
+
+        .piece-edge-top {
+            clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 35%, 85% 50%, 100% 65%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 65%, 15% 50%, 0% 35%, 0% 15%, 15% 0%);
+        }
+
+        .piece-edge-bottom {
+            clip-path: polygon(15% 0%, 85% 0%, 100% 15%, 100% 35%, 85% 50%, 100% 65%, 100% 85%, 85% 100%, 15% 100%, 0% 85%, 0% 65%, 15% 50%, 0% 35%, 0% 15%, 15% 0%);
+        }
+
+        .piece-edge-left {
+            clip-path: polygon(0% 15%, 15% 0%, 35% 0%, 50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 65% 100%, 50% 85%, 35% 100%, 15% 100%, 0% 85%, 0% 15%);
+        }
+
+        .piece-edge-right {
+            clip-path: polygon(0% 15%, 15% 0%, 35% 0%, 50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 85%, 85% 100%, 65% 100%, 50% 85%, 35% 100%, 15% 100%, 0% 85%, 0% 15%);
+        }
+
+        .piece-center {
+            clip-path: polygon(15% 0%, 35% 0%, 50% 15%, 65% 0%, 85% 0%, 100% 15%, 100% 35%, 85% 50%, 100% 65%, 100% 85%, 85% 100%, 65% 100%, 50% 85%, 35% 100%, 15% 100%, 0% 85%, 0% 65%, 15% 50%, 0% 35%, 0% 15%, 15% 0%);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes celebration {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.02) rotate(0.5deg); }
+            50% { transform: scale(1.05); }
+            75% { transform: scale(1.02) rotate(-0.5deg); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .celebration {
+            animation: celebration 0.8s ease-in-out 3;
+        }
+
+        .sparkle {
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .gif-options {
+                gap: 5px;
+            }
+            
+            .gif-option {
+                width: 60px;
+                height: 45px;
+            }
+
+            .puzzle-board {
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Página Inicial -->
+    <div id="home" class="container page">
+        <h1>Bem-vindo ao Surpresa Mágica 🎁</h1>
+        <p>Crie uma mensagem especial para alguém querido!</p>
+        <button onclick="mostrarPagina('criar')">
+            🎁 Criar Surpresa
+        </button>
+    </div>
+
+    <!-- Página Criar Surpresa -->
+    <div id="criar" class="container page hidden">
+        <h2>Personalize sua mensagem 💌</h2>
+        
+        <div class="form-group">
+            <label for="mensagem">Mensagem especial:</label>
+            <textarea id="mensagem" placeholder="Escreva algo especial..." rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="corFundo">Cor de fundo:</label>
+            <input type="color" id="corFundo" value="#ffb6c1" onchange="previewCorFundo(this.value)">
+        </div>
+
+        <div class="form-group">
+            <label>Escolha um GIF:</label>
+            <div class="gif-options">
+                <img src="https://media.giphy.com/media/3o6ZsY8U7O4zvZ9YyY/giphy.gif" 
+                     alt="gif" class="gif-option" onclick="selecionarGif(this)">
+                <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" 
+                     alt="gif" class="gif-option" onclick="selecionarGif(this)">
+                <img src="https://media.giphy.com/media/26BRzozg4TCBXv6QU/giphy.gif" 
+                     alt="gif" class="gif-option" onclick="selecionarGif(this)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gifUpload">Ou envie um GIF:</label>
+            <input type="file" id="gifUpload" accept="image/gif">
+        </div>
+
+        <div class="form-group">
+            <label for="gifLink">Ou cole um link de GIF:</label>
+            <input type="text" id="gifLink" placeholder="https://...">
+        </div>
+
+        <button onclick="salvarMensagem()">Salvar Mensagem</button>
+        <button onclick="mostrarPagina('home')">Voltar</button>
+    </div>
+
+    <!-- Página Selecionar Puzzle -->
+    <div id="puzzle" class="container page hidden">
+        <h2>Escolha o modelo do quebra-cabeça 🧩</h2>
+        
+        <div class="form-group">
+            <label for="modeloPuzzle">Número de peças:</label>
+            <select id="modeloPuzzle">
+                <option value="4">4 peças (2x2)</option>
+                <option value="9">9 peças (3x3)</option>
+                <option value="16">16 peças (4x4)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="imagemPuzzle">Envie a imagem para o quebra-cabeça:</label>
+            <input type="file" id="imagemPuzzle" accept="image/*">
+        </div>
+
+        <button onclick="finalizarSurpresa()">Finalizar Surpresa</button>
+        <button onclick="mostrarPagina('criar')">Voltar</button>
+    </div>
+
+    <!-- Página Finalizar -->
+    <div id="finalizar" class="container page hidden">
+        <h2>🎁 Seu quebra-cabeça está pronto!</h2>
+        <p>Compartilhe o link abaixo com quem você ama:</p>
+
+        <div class="link-box">
+            <input type="text" id="linkGerado" readonly>
+            <button onclick="copiarLink()">📋 Copiar</button>
+        </div>
+
+        <button onclick="visualizarSurpresa()">👀 Visualizar Surpresa</button>
+        <button onclick="mostrarPagina('home')">Voltar ao início</button>
+    </div>
+
+    <!-- Página Apresentação da Surpresa -->
+    <div id="apresentacao" class="page hidden">
+        <div id="apresentacaoContainer" class="apresentacao-container">
+            <div class="mensagem-box">
+                <p id="mensagemApresentacao" class="mensagem-texto"></p>
+                <img id="gifApresentacao" class="gif-surpresa" style="display: none;">
+            </div>
+            <button onclick="iniciarQuebraCabeca()">🧩 Iniciar Quebra-Cabeça</button>
+        </div>
+    </div>
+
+    <!-- Página Quebra-Cabeça -->
+    <div id="quebraCabeca" class="container page hidden">
+        <h2>Monte o quebra-cabeça! 🧩</h2>
+        
+        <div class="puzzle-stats">
+            <p>Peças colocadas: <span id="pecasColocadas">0</span> / <span id="totalPecas">0</span></p>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="puzzleBoard" class="puzzle-board">
+            <div id="puzzleGrid" class="puzzle-grid"></div>
+        </div>
+
+        <div class="puzzle-pieces-container">
+            <p style="width: 100%; margin-bottom: 10px; color: #ff69b4; font-weight: bold;">
+                Arraste as peças para o local correto:
+            </p>
+            <div id="puzzlePieces"></div>
+        </div>
+
+        <div id="puzzleCompleto" style="display: none; text-align: center;">
+            <h3 style="color: #ff69b4;">🎉 Parabéns! Você completou o quebra-cabeça! 🎉</h3>
+            <button onclick="mostrarPagina('home')">🏠 Voltar ao início</button>
+        </div>
+
+        <button onclick="reiniciarPuzzle()">🔄 Reiniciar</button>
+        <button onclick="mostrarPagina('apresentacao')">⬅️ Voltar</button>
+    </div>
+
+    <script>
+        // Variáveis globais para armazenar dados
+        let dadosSurpresa = {
+            mensagem: '',
+            corFundo: '#ffb6c1',
+            gifUrl: '',
+            modeloPuzzle: 4,
+            imagemPuzzle: null
+        };
+
+        let gifSelecionado = '';
+        let puzzleData = {
+            pieces: [],
+            board: [],
+            correctPlacements: 0,
+            totalPieces: 0,
+            imageUrl: null,
+            originalImageUrl: null,
+            gridSize: 0,
+            imageWidth: 0,
+            imageHeight: 0,
+            pieceWidth: 0,
+            pieceHeight: 0
+        };
+
+        // Função para mostrar páginas
+        function mostrarPagina(pagina) {
+            // Esconder todas as páginas
+            const paginas = document.querySelectorAll('.page');
+            paginas.forEach(p => p.classList.add('hidden'));
+
+            // Mostrar página específica
+            document.getElementById(pagina).classList.remove('hidden');
+        }
+
+        // Função para preview da cor de fundo
+        function previewCorFundo(cor) {
+            document.body.style.background = cor;
+        }
+
+        // Função para aplicar cor de fundo definitiva
+        function aplicarCorFundo(cor) {
+            document.body.style.background = cor;
+        }
+
+        // Função para selecionar GIF pré-existente
+        function selecionarGif(elemento) {
+            // Remove seleção anterior
+            document.querySelectorAll('.gif-option').forEach(gif => {
+                gif.classList.remove('selected');
+            });
+
+            // Adiciona seleção atual
+            elemento.classList.add('selected');
+            gifSelecionado = elemento.src;
+
+            // Limpa outros campos de GIF
+            document.getElementById('gifUpload').value = '';
+            document.getElementById('gifLink').value = '';
+        }
+
+        // Função para salvar mensagem e ir para seleção de puzzle
+        function salvarMensagem() {
+            const mensagem = document.getElementById('mensagem').value;
+            const corFundo = document.getElementById('corFundo').value;
+            const gifUpload = document.getElementById('gifUpload').files[0];
+            const gifLink = document.getElementById('gifLink').value;
+
+            if (!mensagem.trim()) {
+                alert('Por favor, escreva uma mensagem especial!');
+                return;
+            }
+
+            dadosSurpresa.mensagem = mensagem;
+            dadosSurpresa.corFundo = corFundo;
+
+            // Determinar qual GIF usar
+            if (gifUpload) {
+                dadosSurpresa.gifUrl = URL.createObjectURL(gifUpload);
+            } else if (gifLink.trim()) {
+                dadosSurpresa.gifUrl = gifLink.trim();
+            } else if (gifSelecionado) {
+                dadosSurpresa.gifUrl = gifSelecionado;
+            }
+
+            mostrarPagina('puzzle');
+        }
+
+        // Função para finalizar surpresa
+        function finalizarSurpresa() {
+            const modeloPuzzle = parseInt(document.getElementById('modeloPuzzle').value);
+            const imagemPuzzle = document.getElementById('imagemPuzzle').files[0];
+
+            if (!imagemPuzzle) {
+                alert('Por favor, selecione uma imagem para o quebra-cabeça!');
+                return;
+            }
+
+            dadosSurpresa.modeloPuzzle = modeloPuzzle;
+            dadosSurpresa.imagemPuzzle = URL.createObjectURL(imagemPuzzle);
+
+            // Gerar ID único e link
+            const idUnico = Math.random().toString(36).substring(2, 10);
+            const link = `${window.location.origin}${window.location.pathname}?surpresa=${idUnico}`;
+            
+            // Salvar no localStorage
+            localStorage.setItem(idUnico, JSON.stringify(dadosSurpresa));
+
+            // Mostrar link gerado
+            document.getElementById('linkGerado').value = link;
+            mostrarPagina('finalizar');
+        }
+
+        // Função para copiar link
+        function copiarLink() {
+            const linkInput = document.getElementById('linkGerado');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+
+            try {
+                document.execCommand('copy');
+                alert('Link copiado com sucesso! 🎉');
+            } catch (err) {
+                navigator.clipboard.writeText(linkInput.value).then(() => {
+                    alert('Link copiado com sucesso! 🎉');
+                }).catch(() => {
+                    alert('Erro ao copiar link. Tente selecionar e copiar manualmente.');
+                });
+            }
+        }
+
+        // Função para visualizar surpresa
+        function visualizarSurpresa() {
+            mostrarApresentacao(dadosSurpresa);
+        }
+
+        // Função para mostrar apresentação da surpresa
+        function mostrarApresentacao(dados) {
+            const container = document.getElementById('apresentacaoContainer');
+            const mensagem = document.getElementById('mensagemApresentacao');
+            const gif = document.getElementById('gifApresentacao');
+
+            // Aplicar cor de fundo
+            aplicarCorFundo(dados.corFundo);
+            container.style.backgroundColor = dados.corFundo;
+
+            // Mostrar mensagem
+            mensagem.textContent = dados.mensagem;
+
+            // Mostrar GIF se existir
+            if (dados.gifUrl) {
+                gif.src = dados.gifUrl;
+                gif.style.display = 'block';
+            } else {
+                gif.style.display = 'none';
+            }
+
+            mostrarPagina('apresentacao');
+        }
+
+        // Função para obter dimensões da imagem
+        function obterDimensoesImagem(imagemUrl, callback) {
+            const img = new Image();
+            img.onload = function() {
+                callback(img.width, img.height);
+            };
+            img.src = imagemUrl;
+        }
+
+        // Função para obter tipo de peça baseado na posição
+        function obterTipoPeca(position, gridSize) {
+            const row = Math.floor(position / gridSize);
+            const col = position % gridSize;
+            const isTop = row === 0;
+            const isBottom = row === gridSize - 1;
+            const isLeft = col === 0;
+            const isRight = col === gridSize - 1;
+
+            if (isTop && isLeft) return 'corner-tl';
+            if (isTop && isRight) return 'corner-tr';
+            if (isBottom && isLeft) return 'corner-bl';
+            if (isBottom && isRight) return 'corner-br';
+            if (isTop) return 'edge-top';
+            if (isBottom) return 'edge-bottom';
+            if (isLeft) return 'edge-left';
+            if (isRight) return 'edge-right';
+            
+            return 'center';
+        }
+
+        // Função para iniciar quebra-cabeça
+        function iniciarQuebraCabeca() {
+            aplicarCorFundo(dadosSurpresa.corFundo);
+            
+            // Obter dimensões da imagem original
+            obterDimensoesImagem(dadosSurpresa.imagemPuzzle, (width, height) => {
+                criarQuebraCabeca(dadosSurpresa.imagemPuzzle, dadosSurpresa.modeloPuzzle, width, height);
+                mostrarPagina('quebraCabeca');
+            });
+        }
+
+        // Função para criar quebra-cabeça
+        function criarQuebraCabeca(imagemUrl, numPecas, imageWidth, imageHeight) {
+            puzzleData.imageUrl = imagemUrl;
+            puzzleData.originalImageUrl = imagemUrl;
+            puzzleData.totalPieces = numPecas;
+            puzzleData.correctPlacements = 0;
+            puzzleData.gridSize = Math.sqrt(numPecas);
+            puzzleData.imageWidth = imageWidth;
+            puzzleData.imageHeight = imageHeight;
+
+            const gridSize = puzzleData.gridSize;
+            const board = document.getElementById('puzzleBoard');
+            const grid = document.getElementById('puzzleGrid');
+            const piecesContainer = document.getElementById('puzzlePieces');
+
+            // Calcular dimensões do quebra-cabeça baseado na imagem
+            const maxBoardSize = 500;
+            const aspectRatio = imageWidth / imageHeight;
+            let boardWidth, boardHeight;
+
+            if (aspectRatio > 1) {
+                // Imagem mais larga
+                boardWidth = Math.min(maxBoardSize, imageWidth);
+                boardHeight = boardWidth / aspectRatio;
+            } else {
+                // Imagem mais alta ou quadrada
+                boardHeight = Math.min(maxBoardSize, imageHeight);
+                boardWidth = boardHeight * aspectRatio;
+            }
+
+            puzzleData.pieceWidth = boardWidth / gridSize;
+            puzzleData.pieceHeight = boardHeight / gridSize;
+
+            // Configurar dimensões do tabuleiro
+            board.style.width = boardWidth + 'px';
+            board.style.height = boardHeight + 'px';
+            
+            // Configurar grid
+            grid.style.gridTemplateColumns = `repeat(${gridSize}, ${puzzleData.pieceWidth}px)`;
+            grid.style.gridTemplateRows = `repeat(${gridSize}, ${puzzleData.pieceHeight}px)`;
+            grid.style.width = boardWidth + 'px';
+            grid.style.height = boardHeight + 'px';
+
+            // Limpar containers
+            grid.innerHTML = '';
+            piecesContainer.innerHTML = '';
+
+            // Criar slots do tabuleiro
+            puzzleData.board = [];
+            for (let i = 0; i < numPecas; i++) {
+                const slot = document.createElement('div');
+                slot.className = 'puzzle-piece-slot';
+                slot.style.width = puzzleData.pieceWidth + 'px';
+                slot.style.height = puzzleData.pieceHeight + 'px';
+                slot.dataset.position = i;
+                slot.addEventListener('dragover', allowDrop);
+                slot.addEventListener('drop', dropPiece);
+                grid.appendChild(slot);
+                puzzleData.board.push(null);
+            }
+
+            // Criar peças embaralhadas
+            puzzleData.pieces = [];
+            const shuffledPositions = shuffleArray([...Array(numPecas).keys()]);
+            
+            shuffledPositions.forEach((originalPos, index) => {
+                const piece = document.createElement('div');
+                piece.className = 'puzzle-piece-draggable puzzle-piece-shape';
+                piece.draggable = true;
+                piece.dataset.originalPosition = originalPos;
+                piece.dataset.currentIndex = index;
+                
+                // Calcular posição da peça na imagem original
+                const row = Math.floor(originalPos / gridSize);
+                const col = originalPos % gridSize;
+                
+                // Dimensões da peça
+                const pieceDisplaySize = 80;
+                piece.style.width = pieceDisplaySize + 'px';
+                piece.style.height = pieceDisplaySize + 'px';
+                
+                // Configurar background da peça
+                piece.style.backgroundImage = `url(${imagemUrl})`;
+                piece.style.backgroundSize = `${gridSize * pieceDisplaySize}px ${gridSize * pieceDisplaySize}px`;
+                piece.style.backgroundPosition = `-${col * pieceDisplaySize}px -${row * pieceDisplaySize}px`;
+                
+                // Adicionar formato de peça
+                const tipoPeca = obterTipoPeca(originalPos, gridSize);
+                piece.classList.add(`piece-${tipoPeca}`);
+                
+                piece.addEventListener('dragstart', dragStart);
+                piece.addEventListener('dragend', dragEnd);
+                
+                piecesContainer.appendChild(piece);
+                puzzleData.pieces.push(piece);
+            });
+
+            atualizarEstatisticas();
+        }
+
+        // Funções de drag and drop
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.originalPosition);
+            e.target.classList.add('dragging');
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function dropPiece(e) {
+            e.preventDefault();
+            const originalPosition = parseInt(e.dataTransfer.getData('text/plain'));
+            const targetPosition = parseInt(e.target.dataset.position);
+            const piece = document.querySelector(`[data-original-position="${originalPosition}"]`);
+
+            if (!piece || e.target.classList.contains('filled')) return;
+
+            // Verificar se a posição está correta
+            if (originalPosition === targetPosition) {
+                // Posição correta - criar peça no tabuleiro
+                const boardPiece = document.createElement('div');
+                boardPiece.className = 'puzzle-piece placed';
+                
+                // Calcular posição da peça na imagem original
+                const row = Math.floor(originalPosition / puzzleData.gridSize);
+                const col = originalPosition % puzzleData.gridSize;
+                
+                // Configurar background da peça no tabuleiro
+                boardPiece.style.backgroundImage = `url(${puzzleData.originalImageUrl})`;
+                boardPiece.style.backgroundSize = `${puzzleData.gridSize * puzzleData.pieceWidth}px ${puzzleData.gridSize * puzzleData.pieceHeight}px`;
+                boardPiece.style.backgroundPosition = `-${col * puzzleData.pieceWidth}px -${row * puzzleData.pieceHeight}px`;
+                boardPiece.style.width = puzzleData.pieceWidth + 'px';
+                boardPiece.style.height = puzzleData.pieceHeight + 'px';
+                
+                // Adicionar formato de peça
+                const tipoPeca = obterTipoPeca(originalPosition, puzzleData.gridSize);
+                boardPiece.classList.add(`piece-${tipoPeca}`);
+                
+                // Adicionar ao slot
+                e.target.appendChild(boardPiece);
+                e.target.classList.add('filled');
+                
+                // Remover peça das peças disponíveis
+                piece.remove();
+                puzzleData.board[targetPosition] = originalPosition;
+                puzzleData.correctPlacements++;
+
+                // Efeito de celebração
+                boardPiece.classList.add('celebration');
+                setTimeout(() => boardPiece.classList.remove('celebration'), 2400);
+
+                atualizarEstatisticas();
+                verificarCompletude();
+            } else {
+                // Posição incorreta - efeito visual
+                e.target.style.borderColor = '#ff4444';
+                e.target.style.backgroundColor = 'rgba(255, 68, 68, 0.1)';
+                setTimeout(() => {
+                    e.target.style.borderColor = '#ccc';
+                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                }, 500);
+            }
+        }
+
+        // Função para embaralhar array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // Função para atualizar estatísticas
+        function atualizarEstatisticas() {
+            document.getElementById('pecasColocadas').textContent = puzzleData.correctPlacements;
+            document.getElementById('totalPecas').textContent = puzzleData.totalPieces;
+            
+            const progress = (puzzleData.correctPlacements / puzzleData.totalPieces) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        // Função para verificar se o puzzle está completo
+        function verificarCompletude() {
+            if (puzzleData.correctPlacements === puzzleData.totalPieces) {
+                setTimeout(() => {
+                    // Remover bordas das peças para mostrar imagem completa
+                    const placedPieces = document.querySelectorAll('.puzzle-piece.placed');
+                    placedPieces.forEach(piece => {
+                        piece.style.border = 'none';
+                        piece.style.clipPath = 'none';
+                        piece.classList.remove('piece-corner-tl', 'piece-corner-tr', 'piece-corner-bl', 'piece-corner-br', 'piece-edge-top', 'piece-edge-bottom', 'piece-edge-left', 'piece-edge-right', 'piece-center');
+                    });
+                    
+                    // Mostrar seção de completude
+                    document.getElementById('puzzleCompleto').style.display = 'block';
+                    
+                    // Efeitos de celebração
+                    document.getElementById('puzzleBoard').classList.add('celebration', 'sparkle');
+                    
+                    // Alert de parabéns
+                    alert('🎉 Parabéns! Você completou o quebra-cabeça! 🎉');
+                }, 500);
+            }
+        }
+
+        // Função para reiniciar puzzle
+        function reiniciarPuzzle() {
+            document.getElementById('puzzleCompleto').style.display = 'none';
+            document.getElementById('puzzleBoard').classList.remove('celebration', 'sparkle');
+            
+            // Obter dimensões da imagem original novamente
+            obterDimensoesImagem(puzzleData.originalImageUrl, (width, height) => {
+                criarQuebraCabeca(puzzleData.originalImageUrl, puzzleData.totalPieces, width, height);
+            });
+        }
+
+        // Função para verificar se há surpresa na URL
+        function verificarSurpresaURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const surpresaId = urlParams.get('surpresa');
+
+            if (surpresaId) {
+                const dadosSalvos = localStorage.getItem(surpresaId);
+                if (dadosSalvos) {
+                    dadosSurpresa = JSON.parse(dadosSalvos);
+                    mostrarApresentacao(dadosSurpresa);
+                } else {
+                    alert('Surpresa não encontrada! 😢');
+                    mostrarPagina('home');
+                }
+            }
+        }
+
+        // Inicializar aplicação
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarSurpresaURL();
+        });
+
+        // Função original do HTML (compatibilidade)
+        function mostrarQuebraCabeca() {
+            mostrarPagina('quebraCabeca');
+        }
+    </script>
+</body>
+
+</html>
+
